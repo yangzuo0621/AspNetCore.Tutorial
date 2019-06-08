@@ -1,19 +1,19 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using Moq;
+using System.Threading.Tasks;
+using Xunit;
+using RazorPagesTestSample.Data;
+using RazorPagesTestSample.Pages;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Routing;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.EntityFrameworkCore;
-using Moq;
-using Xunit;
-using RazorPagesTestSample.Pages;
-using RazorPagesTestSample.Data;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Mvc.Routing;
+using System;
 
 namespace RazorPagesTestSample.Tests.UnitTests
 {
@@ -42,8 +42,8 @@ namespace RazorPagesTestSample.Tests.UnitTests
             // Assert
             var actualMessages = Assert.IsAssignableFrom<List<Message>>(pageModel.Messages);
             Assert.Equal(
-                expectedMessages.OrderBy(m => m.Id).Select(m => m.Text), 
-                actualMessages.OrderBy(m => m.Id).Select(m => m.Text));
+              expectedMessages.OrderBy(m => m.Id).Select(m => m.Text),
+              actualMessages.OrderBy(m => m.Id).Select(m => m.Text));
             #endregion
         }
 
@@ -196,5 +196,6 @@ namespace RazorPagesTestSample.Tests.UnitTests
             Assert.IsType<RedirectToPageResult>(result);
             Assert.Equal(expectedMessageAnalysisResultString, pageModel.MessageAnalysisResult);
         }
+
     }
 }

@@ -1,16 +1,17 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design.Internal;
+using RazorPagesTestSample.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using Xunit;
-using RazorPagesTestSample.Data;
 
 namespace RazorPagesTestSample.Tests.UnitTests
 {
     public class DataAccessLayerTest
     {
         [Fact]
-        public async Task GetMessagesAsync_MessagesAreReturned()
+        public async Task GetMessageAsync_MessagesAreReturned()
         {
             using (var db = new AppDbContext(Utilities.TestDbContextOptions()))
             {
@@ -25,21 +26,21 @@ namespace RazorPagesTestSample.Tests.UnitTests
                 // Assert
                 var actualMessages = Assert.IsAssignableFrom<List<Message>>(result);
                 Assert.Equal(
-                    expectedMessages.OrderBy(m => m.Id).Select(m => m.Text), 
+                    expectedMessages.OrderBy(m => m.Id).Select(m => m.Text),
                     actualMessages.OrderBy(m => m.Id).Select(m => m.Text));
             }
         }
 
         [Fact]
-        public async Task AddMessageAsync_MessageIsAdded()
+        public async Task AddMessageAsync_MessgeIsAdded()
         {
             using (var db = new AppDbContext(Utilities.TestDbContextOptions()))
             {
                 // Arrange
                 var recId = 10;
-                var expectedMessage = new Message() { Id = recId, Text = "Message" };
+                var expectedMessage = new Message { Id = recId, Text = "Message" };
 
-                // Act
+                //Act
                 await db.AddMessageAsync(expectedMessage);
 
                 // Assert
@@ -49,7 +50,7 @@ namespace RazorPagesTestSample.Tests.UnitTests
         }
 
         [Fact]
-        public async Task DeleteAllMessagesAsync_MessagesAreDeleted()
+        public async Task DeleteAllMessagesAsync_MessageAreDeleted()
         {
             using (var db = new AppDbContext(Utilities.TestDbContextOptions()))
             {
@@ -77,7 +78,7 @@ namespace RazorPagesTestSample.Tests.UnitTests
                 await db.AddRangeAsync(seedMessages);
                 await db.SaveChangesAsync();
                 var recId = 1;
-                var expectedMessages = 
+                var expectedMessages =
                     seedMessages.Where(message => message.Id != recId).ToList();
                 #endregion
 
@@ -90,7 +91,7 @@ namespace RazorPagesTestSample.Tests.UnitTests
                 // Assert
                 var actualMessages = await db.Messages.AsNoTracking().ToListAsync();
                 Assert.Equal(
-                    expectedMessages.OrderBy(m => m.Id).Select(m => m.Text), 
+                    expectedMessages.OrderBy(m => m.Id).Select(m => m.Text),
                     actualMessages.OrderBy(m => m.Id).Select(m => m.Text));
                 #endregion
             }
@@ -114,7 +115,7 @@ namespace RazorPagesTestSample.Tests.UnitTests
                 // Assert
                 var actualMessages = await db.Messages.AsNoTracking().ToListAsync();
                 Assert.Equal(
-                    expectedMessages.OrderBy(m => m.Id).Select(m => m.Text), 
+                    expectedMessages.OrderBy(m => m.Id).Select(m => m.Text),
                     actualMessages.OrderBy(m => m.Id).Select(m => m.Text));
             }
         }
